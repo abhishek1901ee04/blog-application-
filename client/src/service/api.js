@@ -10,6 +10,7 @@ const axiosInstance = axios.create({
     timeout: 10000, 
     
 });
+
 // interceptors do function leta hai pehal sucess wala dusra fail ke case main 
 axiosInstance.interceptors.request.use(
     function(config) {

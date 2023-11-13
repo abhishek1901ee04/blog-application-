@@ -14,7 +14,7 @@ router.post('/login', loginUser);
 router.post('/signup', signupUser);
 router.post('/logout', logoutUser);
 
-// router.post('/token', createNewToken);
+router.post('/token', createNewToken);
 
 router.post('/create', authenticateToken,createPost); // creating a post 
 router.put('/update/:id', authenticateToken, updatePost);

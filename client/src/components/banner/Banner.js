@@ -19,6 +19,7 @@ const Heading = styled(Typography)`
 const SubHeading = styled(Typography)`
     font-size: 20px;
     background: #FFFFFF;
+    padding: 1px;
 `;
 
 const Banner = () => {
@@ -26,7 +27,7 @@ const Banner = () => {
     return (
         <Image>
             <Heading>BLOG</Heading>
-            <SubHeading>Code for Interview</SubHeading>
+            <SubHeading>Application</SubHeading>
         </Image>
     )
 }
