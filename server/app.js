@@ -26,6 +26,6 @@ const password = process.env.DB_PASSWORD;
 
 const URL = process.env.MONGODB_URI || `mongodb://${username}:${password}@ac-ccn1iwq-shard-00-00.qfhbybs.mongodb.net:27017,ac-ccn1iwq-shard-00-01.qfhbybs.mongodb.net:27017,ac-ccn1iwq-shard-00-02.qfhbybs.mongodb.net:27017/?ssl=true&replicaSet=atlas-rs4o6g-shard-0&authSource=admin&retryWrites=true&w=majority`;
 
-Connection(url);
+Connection(URL);
 
 app.listen(PORT, () => console.log(`Server is running successfully  on PORT ${PORT}`));
