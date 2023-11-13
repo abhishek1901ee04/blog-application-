@@ -1,8 +1,7 @@
 import grid from 'gridfs-stream';
 import mongoose from 'mongoose';
 
-const url = '';
-
+const url = process.env.BASE_URL;
 
 let gfs, gridfsBucket;
 const conn = mongoose.connection;
@@ -13,7 +12,6 @@ conn.once('open', () => {
     gfs = grid(conn.db, mongoose.mongo);
     gfs.collection('fs');
 });
-
 
 export const uploadImage = (request, response) => {
     if(!request.file) 

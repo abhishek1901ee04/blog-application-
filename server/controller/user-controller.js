@@ -50,6 +50,7 @@ export const loginUser = async (request, response) => {
         return response.status(500).json({ msg: 'error while login the user' })
     }
 }
+
 // logout user
 export const logoutUser = async (request, response) => {
     const token = request.body.token;

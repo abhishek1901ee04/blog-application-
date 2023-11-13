@@ -36,6 +36,7 @@ const Details = styled(Typography)`
 `;
 
 const Post = ({ post }) => {
+    console.log(post);
     const url = post.picture ? post.picture : 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80';
     
     const addEllipsis = (str, limit) => {
@@ -44,6 +45,7 @@ const Post = ({ post }) => {
 
     return (
         <Container>
+            
             <Image src={url} alt="post" />
             <Text>{post.categories}</Text>
             <Heading>{addEllipsis(post.title, 20)}</Heading>
