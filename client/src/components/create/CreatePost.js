@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import { styled, Box, TextareaAutosize, Button, InputBase, FormControl  } from '@mui/material';
-import { AddCircle as Add, ConstructionOutlined, ControlCameraSharp } from '@mui/icons-material';
+import { AddCircle as Add, ConstructionOutlined, ControlCameraSharp, LegendToggleOutlined } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { API } from '../../service/api';
@@ -16,8 +16,11 @@ const Container = styled(Box)(({ theme }) => ({
 
 const Image = styled('img')({
     width: '100%',
-    height: '50vh',
-    objectFit: 'cover'
+    height: '100%', // Adjusted height for full coverage
+    objectFit: 'cover',
+    borderRadius: '8px', // Optional: Add border radius for a rounded look
+    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', // Optional: Add a subtle shadow
+    // Add any additional styles as needed
 });
 
 const StyledFormControl = styled(FormControl)`
@@ -59,31 +62,43 @@ const CreatePost = () => {
     const [file, setFile] = useState('');
 
     const { account } = useContext(DataContext);
+    const BASE_URL = "https://blog-backend-app-etnr.onrender.com" ;
 
-    const url = post.picture ? post.picture : 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
+    const url = 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
+  
+   const  [newURL,setNewURL] =useState(url);
+
     
-    useEffect(() => {
-        const getImage = async () => { 
-            if(file) {
-                console.log("working")
-                const data = new FormData();
-                data.append("name", file.name);
-                data.append("file",file);
-                // for (const value of data.values()) {
-                //     console.log(value);
-                // }
-                // console.log(data.values())
-                const response = await API.uploadFile(data);
-                post.picture = response.data;
-            }
-            else{
-                console.log("not working");
-            }
+   useEffect(() => {
+    const getImage = async () => { 
+      try {
+        if (file) {
+          const data = new FormData();
+          data.append("name", file.name);
+          data.append("file", file);
+          
+          const response = await API.uploadFile(data);
+          if (response.isSuccess) {
+            // Assuming post is a state variable and setPost is a function to update it
+            setPost(prevPost => ({
+              ...prevPost,
+              picture: response.data,
+              categories: location.search?.split('=')[1] || 'All',
+              username: account.username,
+            }));
+            // Assuming setNewURL is a state update function
+            setNewURL(response.data);    
+          }
         }
-        getImage();
-        post.categories = location.search?.split('=')[1] || 'All';
-        post.username = account.username;
-    },[file]);
+      } catch (error) {
+        // Handle errors if needed
+        console.error("Error uploading file:", error);
+      }
+    };
+
+    getImage();
+  }, [file, location.search, account.username, setPost, setNewURL]);
+   
 
     const savePost = async () => {
         await API.createPost(post);
@@ -96,7 +111,7 @@ const CreatePost = () => {
 
     return (
         <Container>
-            <Image src={url} alt="post" />
+            <Image src={newURL} alt="post" />
 
             <StyledFormControl>
                 <label htmlFor="fileInput">

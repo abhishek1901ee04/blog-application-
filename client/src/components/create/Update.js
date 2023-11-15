@@ -15,8 +15,11 @@ const Container = styled(Box)(({ theme }) => ({
 
 const Image = styled('img')({
     width: '100%',
-    height: '50vh',
-    objectFit: 'cover'
+    height: '100%', // Adjusted height for full coverage
+    objectFit: 'cover',
+    borderRadius: '8px', // Optional: Add border radius for a rounded look
+    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', // Optional: Add a subtle shadow
+    // Add any additional styles as needed
 });
 
 const StyledFormControl = styled(FormControl)`
